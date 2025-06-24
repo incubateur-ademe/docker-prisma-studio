@@ -1,10 +1,10 @@
 # ---- Base Node ----
-FROM node:16-bullseye AS base
-RUN apt-get update
-RUN apt-get install openssl
-LABEL image=timothyjmiller/prisma-studio:latest \
-  maintainer="Timothy Miller <tim.miller@preparesoftware.com>" \
-  base=debian
+FROM node:22.16.0-bullseye-slim AS base
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends openssl && \
+  apt-get upgrade -y && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 #
 # ---- Dependencies ----
@@ -12,8 +12,8 @@ FROM base AS dependencies
 COPY package.json ./
 COPY *.lock ./
 
-RUN npm set progress=false && npm config set depth 0
-RUN npm install --only=production
+ENV NODE_ENV=production
+RUN pnpm install --frozen-lockfile --prod
 
 #
 # ---- Release ----
