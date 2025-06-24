@@ -10,4 +10,5 @@ generator client {
 }
 EOF
 node_modules/.bin/prisma db pull
+node_modules/.bin/prisma generate
 exec node_modules/.bin/prisma studio --port $PRISMA_STUDIO_PORT --browser none
