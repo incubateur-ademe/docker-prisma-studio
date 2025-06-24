@@ -5,7 +5,7 @@ ENV NODE_ENV=production
 COPY .nvmrc .
 
 FROM base AS pull
-COPY schema.prisma .
+COPY prisma/ .
 COPY package.json .
 RUN npx --yes prisma db pull --force
 RUN npx --yes prisma generate
