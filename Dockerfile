@@ -1,6 +1,4 @@
 FROM node:22.16.0-alpine AS base
-ARG PRISMA_STUDIO_PORT="5555"
-ENV PRISMA_STUDIO_PORT=${PRISMA_STUDIO_PORT}
 ARG POSTGRES_URL
 ENV POSTGRES_URL=${POSTGRES_URL}
 ENV NODE_ENV=production
@@ -13,6 +11,8 @@ RUN npx --yes prisma db pull --force
 RUN npx --yes prisma generate
 
 FROM base AS release
+ARG PORT
+ENV PORT=${PORT}
 COPY --from=pull . .
-EXPOSE $PRISMA_STUDIO_PORT
-ENTRYPOINT ["npx", "--yes", "prisma", "studio", "--port", "$PRISMA_STUDIO_PORT", "--browser", "none"]
+EXPOSE ${PORT}
+ENTRYPOINT ["npx", "--yes", "prisma", "studio", "--port", "${PORT}", "--browser", "none"]
