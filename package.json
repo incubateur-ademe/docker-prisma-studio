@@ -9,5 +9,8 @@
   },
   "license": "MIT",
   "author": "Incubateur ADEME",
-  "private": true
+  "private": true,
+  "engines": {
+    "node": "22.16.0"
+  }
 }
