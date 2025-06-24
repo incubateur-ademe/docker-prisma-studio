@@ -1,0 +1,13 @@
+{
+  "name": "docker-prisma-studio",
+  "version": "1.0.0",
+  "description": "Access Prisma Studio securely through your web browser.",
+  "homepage": "https://github.com/incubateur-ademe/docker-prisma-studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/incubateur-ademe/docker-prisma-studio.git"
+  },
+  "license": "MIT",
+  "author": "Incubateur ADEME",
+  "private": true
+}
