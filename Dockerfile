@@ -13,7 +13,7 @@ COPY package.json ./
 COPY *.lock ./
 
 ENV NODE_ENV=production
-RUN pnpm install --frozen-lockfile --prod
+RUN yarn install --frozen-lockfile --production
 
 #
 # ---- Release ----
