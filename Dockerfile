@@ -15,4 +15,6 @@ ARG PORT
 ENV PORT=${PORT}
 COPY --from=pull . .
 EXPOSE ${PORT}
-ENTRYPOINT ["npx", "--yes", "prisma", "studio", "--port", "${PORT}", "--browser", "none"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
