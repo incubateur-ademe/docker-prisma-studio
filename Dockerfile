@@ -15,4 +15,4 @@ RUN npx --yes prisma generate
 FROM base AS release
 COPY --from=pull . .
 EXPOSE $PRISMA_STUDIO_PORT
-ENTRYPOINT ["/bin/sh", "npx", "prisma", "--yes", "studio", "--port", "$PRISMA_STUDIO_PORT", "--browser", "none"]
+ENTRYPOINT ["npx", "--yes", "prisma", "studio", "--port", "$PRISMA_STUDIO_PORT", "--browser", "none"]
