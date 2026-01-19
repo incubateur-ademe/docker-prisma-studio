@@ -4,15 +4,18 @@ ENV DATABASE_URL=${DATABASE_URL}
 ENV NODE_ENV=production
 COPY .nvmrc .
 COPY package.json .
-COPY package-lock.json .
-RUN npm ci
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+RUN corepack enable
+RUN corepack install
+RUN pnpm install --frozen-lockfile
 
 
 FROM base AS pull
 COPY prisma/ .
 COPY prisma.config.ts .
-RUN npm run prisma db pull --force
-RUN npm run prisma generate
+RUN pnpm prisma db pull --force
+RUN pnpm prisma generate
 
 FROM base AS release
 ARG PORT
