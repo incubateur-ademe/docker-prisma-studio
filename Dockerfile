@@ -1,14 +1,18 @@
-FROM node:22.16.0-alpine AS base
+FROM node:24.13.0-alpine AS base
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 ENV NODE_ENV=production
 COPY .nvmrc .
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
 
 FROM base AS pull
 COPY prisma/ .
-COPY package.json .
-RUN npx --yes prisma db pull --force
-RUN npx --yes prisma generate
+COPY prisma.config.ts .
+RUN npm run prisma db pull --force
+RUN npm run prisma generate
 
 FROM base AS release
 ARG PORT

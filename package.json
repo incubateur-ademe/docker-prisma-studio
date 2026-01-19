@@ -11,6 +11,11 @@
   "author": "Incubateur ADEME",
   "private": true,
   "engines": {
-    "node": "22.16.0"
+    "node": "24.13.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.2.0",
+    "prisma": "^7.2.0",
+    "typescript": "^5.9.3"
   }
 }
