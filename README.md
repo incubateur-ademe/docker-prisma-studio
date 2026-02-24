@@ -24,9 +24,12 @@ ARM64, ARMv7, x86, x64, PPC
 
 ## How it Works
 
-A docker container with the latest LTS of NodeJS and the ```@prisma/cli``` module introspects your postgres database to auto-generate a prisma schema in the form ```schema.prisma```.
+A docker container with the latest LTS of NodeJS and the ```@prisma/cli``` module makes Prisma Studio available at the port specified to display your data source.
 
-Prisma Studio is then made available at the port specified to display your data source.
+Two modes are supported for providing the Prisma schema:
+
+- **DB introspection (default):** the container runs `prisma db pull` at build time to auto-generate a `schema.prisma` by introspecting the target database. Requires `DATABASE_URL` as a build argument.
+- **Schema URL:** a `schema.prisma` is downloaded from a remote URL (e.g. a raw GitHub file) at build time. `DATABASE_URL` is only needed at runtime. See [Build Arguments](#-build-arguments) below.
 
 ## 👨‍💻 Deploying
 
@@ -37,6 +40,36 @@ Prisma Studio is then made available at the port specified to display your data 
 Setting up an on-premise HTTPS reverse proxy requires knowledge of [Traefik v2](https://doc.traefik.io/traefik/). [This is a great starting point](https://www.smarthomebeginner.com/cloudflare-settings-for-traefik-docker/).
 
 For help setting up an on-premise or cloud-agnostic HTTPS reverse proxy for Kubernetes, [email me](mailto:tim.miller@preparesoftware.com?subject=[GitHub%20Consulting]%20docker-prisma-studio) or [contact me on Discord](https://discord.gg/gtF4AX9UGA)
+
+## 🔧 Build Arguments
+
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URL` | Required for DB introspection mode | Connection string used by `prisma db pull` at build time. Also embedded in the image for runtime. |
+| `SCHEMA_URL` | Required for schema URL mode | URL to a raw `schema.prisma` file (e.g. GitHub raw URL). Skips `prisma db pull`. When used, `DATABASE_URL` does not need to be provided at build time — pass it at runtime via `-e`. |
+| `PORT` | Optional | Port exposed by the container (default: `5555`). |
+
+### DB introspection mode
+
+```bash
+docker build \
+  --build-arg DATABASE_URL=postgresql://user:password@host:5432/db \
+  -t prisma-studio .
+
+docker run -p 5555:5555 prisma-studio
+```
+
+### Schema URL mode
+
+```bash
+docker build \
+  --build-arg SCHEMA_URL=https://raw.githubusercontent.com/org/repo/main/prisma/schema.prisma \
+  -t prisma-studio .
+
+docker run -e DATABASE_URL=postgresql://user:password@host:5432/db -p 5555:5555 prisma-studio
+```
+
+> **Note:** the schema downloaded from the URL must include a valid `generator` block for `prisma generate` to succeed.
 
 ## 📁 Environment Variables
 

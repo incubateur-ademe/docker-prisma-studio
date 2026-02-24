@@ -12,9 +12,14 @@ RUN pnpm install --frozen-lockfile
 
 
 FROM base AS pull
+ARG SCHEMA_URL
 COPY prisma/ .
 COPY prisma.config.ts .
-RUN pnpm prisma db pull --force
+RUN if [ -n "${SCHEMA_URL}" ]; then \
+      wget -q -O schema.prisma "${SCHEMA_URL}"; \
+    else \
+      pnpm prisma db pull --force; \
+    fi
 RUN pnpm prisma generate
 
 FROM base AS release
