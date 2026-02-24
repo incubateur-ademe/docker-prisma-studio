@@ -11,7 +11,7 @@
   "author": "Incubateur ADEME",
   "private": true,
   "engines": {
-    "node": "24.13.0"
+    "node": "24.13.1"
   },
   "devDependencies": {
     "@types/node": "^24.0.0"

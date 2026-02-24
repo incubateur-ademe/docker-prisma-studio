@@ -69,7 +69,7 @@ docker build \
 docker run -e DATABASE_URL=postgresql://user:password@host:5432/db -p 5555:5555 prisma-studio
 ```
 
-> **Note:** the schema downloaded from the URL must include a valid `generator` block for `prisma generate` to succeed.
+> **Note:** only the `generator client` block is kept from the downloaded schema. Any other generator (e.g. `zod-prisma-types`) is automatically stripped. `previewFeatures` and other options inside `generator client` are preserved as-is.
 
 ## 📁 Environment Variables
 

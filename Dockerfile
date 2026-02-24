@@ -13,7 +13,10 @@ ARG SCHEMA_URL
 COPY prisma/ ./prisma/
 COPY prisma.config.ts ./
 RUN if [ -n "${SCHEMA_URL}" ]; then \
-    wget -q -O prisma/schema.prisma "${SCHEMA_URL}"; \
+    wget -q -O prisma/schema.prisma "${SCHEMA_URL}" && \
+    awk '/^generator client /{g=1;print;next} /^generator /{skip=1;next} skip&&/^\}/{skip=0;next} g&&/^\}/{g=0;print;next} !skip{print}' \
+      prisma/schema.prisma > /tmp/schema.prisma && \
+    mv /tmp/schema.prisma prisma/schema.prisma; \
     else \
     pnpm prisma db pull --force; \
     fi && \
