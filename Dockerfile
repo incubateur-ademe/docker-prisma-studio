@@ -16,7 +16,8 @@ RUN if [ -n "${SCHEMA_URL}" ]; then \
     wget -q -O prisma/schema.prisma "${SCHEMA_URL}"; \
     else \
     pnpm prisma db pull --force; \
-    fi
+    fi && \
+    sed -i '/^\s*url\s*=/d; /^\s*directUrl\s*=/d' prisma/schema.prisma
 RUN pnpm prisma generate
 
 FROM base AS release

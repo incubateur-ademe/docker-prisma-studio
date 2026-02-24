@@ -17,6 +17,10 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.10.13
 
 packages:
 
@@ -110,6 +114,9 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
+
+  '@types/node@24.10.13':
+    resolution: {integrity: sha512-oH72nZRfDv9lADUBSo104Aq7gPHpQZc4BTx38r9xf9pg5LfP6EzSyH2n7qFmmxRQXh7YlUXODcYsg6PuTDSxGg==}
 
   '@types/react@19.2.8':
     resolution: {integrity: sha512-3MbSL37jEchWZz2p2mjntRZtPt837ij10ApxKfgmXCTuHWagYg7iA5bqPw6C8BMPfwidlvfPI/fxOc42HLhcyg==}
@@ -364,6 +371,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+
   valibot@1.2.0:
     resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
     peerDependencies:
@@ -492,6 +502,10 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@types/node@24.10.13':
+    dependencies:
+      undici-types: 7.16.0
 
   '@types/react@19.2.8':
     dependencies:
@@ -723,6 +737,8 @@ snapshots:
   tinyexec@1.0.2: {}
 
   typescript@5.9.3: {}
+
+  undici-types@7.16.0: {}
 
   valibot@1.2.0(typescript@5.9.3):
     optionalDependencies:
